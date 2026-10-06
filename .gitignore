@@ -1,0 +1,18 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+.DS_Store
+
+# Documentos reales y resultados (datos personales)
+*.pdf
+*.jpg
+*.jpeg
+*.png
+*.webp
+*.heic
+*.tif
+*.tiff
+*.fiel.json
+output/
+fiel/
