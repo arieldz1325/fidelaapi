@@ -16,3 +16,6 @@ __pycache__/
 *.fiel.json
 output/
 fiel/
+
+# Local database, secret key and uploaded documents
+data/
