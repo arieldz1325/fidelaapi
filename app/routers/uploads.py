@@ -6,7 +6,7 @@ import uuid
 from pathlib import Path
 from typing import Annotated
 
-from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, UploadFile, status
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, Query, RedirectResponse, UploadFile, status
 
 from .. import email_templates, mailer, storage
 from ..config import settings
@@ -124,3 +124,15 @@ def track(
     if row is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, "No order matches that reference and email")
     return TrackResponse(**dict(row))
+
+
+@router.get("/track-click", tags=["uploads"])
+def track_click(
+    reference: str,
+    email: Annotated[str, Query()],
+    db: Annotated[sqlite3.Connection, Depends(get_db)],
+) -> RedirectResponse:
+    """Email link tracking: logs the click and redirects to the track page."""
+    audit(db, "email_click_track", detail=f"reference={reference}, email={email}")
+    db.commit()
+    return RedirectResponse(url=f"/track?reference={reference}&email={email}", status_code=302)
