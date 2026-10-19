@@ -16,8 +16,11 @@ MUTED = "#71717a"
 
 
 def track_url(reference: str, email: str) -> str:
-    return f"{settings.public_url}/track-click?{urlencode({'reference': reference, 'email': email})}"
-
+    query = urlencode({
+        "reference": reference,
+        "email": email,
+    })
+    return f"{settings.public_url.rstrip('/')}/track?{query}"
 
 def _layout(preheader: str, heading: str, paragraphs: list[str], button: tuple[str, str] | None = None,
             highlight: tuple[str, str] | None = None, quote: tuple[str, str] | None = None, footnote: str = "") -> str:
