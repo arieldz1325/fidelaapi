@@ -111,7 +111,14 @@ def order_received(name: str, email: str, reference: str, file_count: int, docum
             ],
             highlight=("Your order reference", escape(reference)),
             button=("Track your order", url),
-            footnote="If you didn’t request this translation, just reply to this email and let us know.",
+            #footnote="If you didn’t request this translation, just reply to this email and let us know.",
+            footnote=(
+                "If you didn’t request this translation, just reply to this email and let us know."
+                f'<br><br>Direct link test: <a href="{escape(url)}" '
+                f'style="color:{ACCENT};text-decoration:underline;">'
+                f'{escape(url)}</a>'
+            ),
+
         ),
         text=_text(
             f"Thank you, {name.split()[0]}.",
